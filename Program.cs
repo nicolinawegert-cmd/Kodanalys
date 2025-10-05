@@ -5,7 +5,7 @@ namespace Kodanalys
     class Program
     {
         static string[] userList = new string[10];
-        static int user = 0;
+        static int userCount = 0;
 
         static void Main(string[] args)
         {
@@ -55,12 +55,12 @@ namespace Kodanalys
         {
             Console.Write("Ange namn: ");
             string? userName = Console.ReadLine();
-                if (user < 10)
-                {
-                    userList[user] = userName!;
-                    user++;
-                }
-                else
+            if (userCount < 10)
+            {
+                userList[userCount] = userName!;
+                userCount++;
+            }
+            else
                 {
                     Console.WriteLine("Listan är full!");
                 }
@@ -69,7 +69,7 @@ namespace Kodanalys
         static void ListUsers()
         {
             Console.WriteLine("Användare:");
-                for (int i = 0; i < user; i++)
+            for (int i = 0; i < userCount; i++)
                 {
                     Console.WriteLine(userList[i]);
                 }
@@ -79,7 +79,7 @@ namespace Kodanalys
             Console.Write("Ange namn att ta bort: ");
             string? userToRemove = Console.ReadLine();
             int userIndex = -1;
-            for (int i = 0; i < user; i++)
+            for (int i = 0; i < userCount; i++)
             {
                 if (userList[i] == userToRemove)
                 {
@@ -90,11 +90,11 @@ namespace Kodanalys
 
             if (userIndex != -1)
             {
-                for (int i = userIndex; i < user - 1; i++)
+                for (int i = userIndex; i < userCount - 1; i++)
                 {
                     userList[i] = userList[i + 1];
                 }
-                user--;
+                userCount--;
             }
             else
             {
@@ -107,7 +107,7 @@ namespace Kodanalys
             Console.Write("Ange namn att söka: ");
             string? searchName = Console.ReadLine();
             bool found = false;
-            for (int i = 0; i < user; i++)
+            for (int i = 0; i < userCount; i++)
             {
                 if (userList[i] == searchName)
                 {
