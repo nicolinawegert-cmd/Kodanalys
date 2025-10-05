@@ -4,7 +4,7 @@ namespace Kodanalys
 {
     class Program
     {
-        static string[] userList = new string[10];
+        static List<string> users = new List<string>();
         static int userCount = 0;
 
         static void Main(string[] args)
@@ -55,48 +55,40 @@ namespace Kodanalys
         {
             Console.Write("Ange namn: ");
             string? userName = Console.ReadLine();
-            if (userCount < 10)
+
+            if (string.IsNullOrWhiteSpace(userName))
             {
-                userList[userCount] = userName!;
-                userCount++;
+                Console.WriteLine("Namnet får inte vara tomt.");
+                return;
             }
-            else
-                {
-                    Console.WriteLine("Listan är full!");
-                }
+            users.Add(userName);
+            Console.WriteLine($"Användare {userName} tillagd.");
         }
 
         static void ListUsers()
         {
+            if (users.Count == 0)
+            {
+                Console.WriteLine("Inga användare tillagda.");
+                return;
+            }
+
             Console.WriteLine("Användare:");
-            for (int i = 0; i < userCount; i++)
-                {
-                    Console.WriteLine(userList[i]);
-                }
+            foreach (var user in users)
+            {
+                Console.WriteLine(user);
+            }
         }
         static void RemoveUser()
         {
             Console.Write("Ange namn att ta bort: ");
             string? userToRemove = Console.ReadLine();
-            int userIndex = -1;
-            for (int i = 0; i < userCount; i++)
+            if (users.Remove(userToRemove!))
             {
-                if (userList[i] == userToRemove)
-                {
-                    userIndex = i;
-                    break;
-                }
+                Console.WriteLine($"Användare {userToRemove} borttagen.");
+                return;
             }
-
-            if (userIndex != -1)
-            {
-                for (int i = userIndex; i < userCount - 1; i++)
-                {
-                    userList[i] = userList[i + 1];
-                }
-                userCount--;
-            }
-            else
+            else   
             {
                 Console.WriteLine("Användaren hittades inte.");
             }
@@ -106,18 +98,10 @@ namespace Kodanalys
         {
             Console.Write("Ange namn att söka: ");
             string? searchName = Console.ReadLine();
-            bool found = false;
-            for (int i = 0; i < userCount; i++)
-            {
-                if (userList[i] == searchName)
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if (found)
+            if (users.Contains(searchName!))
             {
                 Console.WriteLine("Användaren finns i listan.");
+                return;
             }
             else
             {
